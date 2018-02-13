@@ -1,7 +1,7 @@
 import React from 'react';
 import './Conversation.css';
-//import { InputWithButton } from 'watson-react-components';
-import { InputWithButton } from  'watson-react-components/dist/components';
+import { InputWithButton } from 'watson-react-components';
+//import { InputWithButton } from  'watson-react-components/dist/components';
 import Message from './Message.js';
 
 function Conversation(props) {
