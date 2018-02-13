@@ -1,0 +1,61 @@
+{
+  "entities": [
+    {
+      "location": [
+        0,
+        8
+      ],
+      "confidence": 1,
+      "entity": "sys-date",
+      "metadata": {
+        "calendar_type": "GREGORIAN",
+        "timezone": "GMT"
+      },
+      "value": "2018-02-11"
+    }
+  ],
+  "context": {
+    "system": {
+      "branch_exited_reason": "completed",
+      "dialog_request_counter": 1,
+      "branch_exited": true,
+      "dialog_turn_counter": 1,
+      "dialog_stack": [
+        {
+          "dialog_node": "root"
+        }
+      ],
+      "_node_output_map": {
+        "Uhrzeit": [
+          0,
+          0
+        ]
+      }
+    },
+    "is_non_business_question": true,
+    "topConfidence": 1,
+    "conversation_id": "d0c2e0f0-fcad-4ea6-9f67-db206e57b666",
+    "topIntent": "Uhrzeit"
+  },
+  "intents": [
+    {
+      "intent": "Uhrzeit",
+      "confidence": 1
+    }
+  ],
+  "output": {
+    "text": [
+      "Es ist 14:02 Uhr."
+    ],
+    "nodes_visited": [
+      "node_1_1500369585323",
+      "Intents",
+      "Uhrzeit"
+    ],
+    "answer_id": [],
+    "log_messages": []
+  },
+  "input": {
+    "text": "wie spät ist es"
+  }
+}
