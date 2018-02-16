@@ -1,6 +1,9 @@
 .button__container {
-  margin-top: 200px;
-  text-align: center;
+  margin-top: 5px;
+  text-align: centert;
+  background-color: lightgray;
+  width: 80%;
+  margin-left: 10%;
 }
 .button {
   background-color:green;
@@ -12,6 +15,13 @@
 }
 .conversation__intro {
   font-size: 20px;
-  width: 80%;
+  width: 100%;
   text-align: center;
+}
+.conversation__intro_links {
+  font-size: 10px;
+  width: 100%;
+  text-align: center;
+  color: blue;
+  border: lightcoral;
 }

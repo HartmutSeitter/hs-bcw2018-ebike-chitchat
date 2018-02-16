@@ -1,3 +1,8 @@
+//************************************************************************************ */
+// 7.2.2018 add additional field to display translated output
+//  add hsmessage1 to msgObj -- here I can put translated text in, when it is switched on
+//      additional changes made to Message.js, Conversation.js and the corresponding css files
+
 import React, { Component } from 'react'
 import './App.css'
 import 'react-chat-elements/dist/main.css';
@@ -5,11 +10,12 @@ import Conversation from './Conversation.js';
 import DiscoveryResult from './DiscoveryResult.js';
 import WeatherResult from './WeatherResults.js';
 import axios from 'axios'
+
 class App extends Component {
   constructor () {
     super()
     this.state = {
-      username: '',
+      username: 'username',
       //hugo: '123',
       context: {},
       // A Message Object consists of a message[, intent, date, isUser]
@@ -73,13 +79,29 @@ class App extends Component {
     
               
     } else {
-      console.log("handleRespone = ",responseJson);
+      
       let outputMessage = responseJson.output.text.filter(text => text).join('\n');
-      outputMessage = outputMessage.split('<br/>').join('\n');
-      console.log("outputMessage type", outputMessage);
+      let translatedMessage = "";
+      if (responseJson.output.hasOwnProperty('translated') && responseJson.output.translated.hasOwnProperty('payload')) {
+         translatedMessage = responseJson.output.translated.payload.join('\n');
+      }
+
+      let htmllinkMessage = "";
+      let htmllinkText = "";
+      //if (responseJson.output.hasOwnProperty('textlink') && responseJson.output.textlink.hasOwnProperty('htmllink')) {
+      if (responseJson.output.hasOwnProperty('textlink')) {
+        htmllinkMessage = responseJson.output.textlink.join('\n');
+      }
+      if (responseJson.output.hasOwnProperty('linktext')) {
+        htmllinkText = responseJson.output.linktext.join('\n');
+      }
+        //outputMessage = outputMessage.split('<br/>').join('\n');
+      //console.log("outputMessage", outputMessage);
+      //console.log("translatedMessage", translatedMessage);
       const outputIntent = responseJson.intents[0] ? responseJson.intents[0]['intent'] : '';
       const outputDate = responseJson.date.toLocaleTimeString();
       const outputContext = responseJson.context;
+      //console.log("outputContext", outputContext);
       this.setState({
         context: outputContext
       });
@@ -87,20 +109,21 @@ class App extends Component {
         position: 'left',
         label: outputIntent,
         message: outputMessage,
+        hsmessage1: translatedMessage,
+        hshtmllink: htmllinkMessage,
+        hslinktext: htmllinkText,
         date: outputDate,
         hasTail: true
       };
-      console.log("msgObj=",msgObj)
+      console.log("appjs - handleResponse - msgObj=",msgObj)
       this.addMessage(msgObj);
     }
   }
   
   addMessage(msgObj) {
-    //console.log("addMessage msgObj = ", msgObj);
+    console.log("app.js - addMessage - msgObj = ", msgObj);
     this.setState({
       messageObjectList: [ ...this.state.messageObjectList , msgObj]
-      //messageObjectList: [ ...this.state.messageObjectList , hsmsg]
-    
     });
   }
   
@@ -172,16 +195,18 @@ class App extends Component {
     return (
       <div className='button__container'>      
         <p className='conversation__intro'>
-            This demo shows how the Conversation
-            service calls the Discovery service <br/><br/>when it does not know how to respond. <br/><br/>The calls to Conversation and Discovery are made in Functions, IBM's serverless platform.
-            <br/>     <br/>
-            visit <a href="https://console.bluemix.net/openwhisk/" target='_blank'>IBM Cloud Functions</a> now!
-            <br/>
-            visit <a href="hhttps://www.ibm.com/watson/services/conversation/" target='_blank'>IBM Converstions</a> now!
-            <br/>
-            visit <a href="hhttps://www.ibm.com/watson/services/discovery/" target='_blank'>IBM Discovery</a> now!
-            <br/>
-            visit <a href="https://console.bluemix.net/docs/services/Weather/weather_overview.html#about_weather"target='_blank'>IBM Weather Channel</a> now!
+           <img src={ require('./images/ibmcloud_icon.png') } />
+           <br/>This demo shows how the Conversation
+            service calls other Watson service 
+            to build advanced conversation dialogs.
+            <br/><br/>When Watson Conversations does not know how to respond, Watson Discovery will be called.<br/>
+            The calls to the Watson Services are made in Functions, IBM's serverless platform.
+        </p>
+        <p className='conversation__intro_links'>
+            <br/> <a href="https://console.bluemix.net/openwhisk/" target='_blank'>IBM Cloud Functions     <img src={ require('./images/functions_icon.png' )} /></a>
+            <br/> <a href="https://www.ibm.com/watson/services/conversation/" target='_blank'>IBM Converstions     <img src={ require('./images/conversation_icon.png') } /></a>
+            <br/> <a href="https://www.ibm.com/watson/services/discovery/" target='_blank'>IBM Discovery</a> <img src={ require('./images/discovery_icon.png') } />
+            <br/> <a href="https://console.bluemix.net/docs/services/Weather/weather_overview.html#about_weather"target='_blank'>IBM Weather Channel <img src={ require('./images/weathercompany.png') } /></a>
         </p>
         <Conversation
           onSubmit={this.handleSubmit}
