@@ -1,3 +1,4 @@
+// hs
 import React from 'react';
 import './Conversation.css';
 import { InputWithButton } from 'watson-react-components';
