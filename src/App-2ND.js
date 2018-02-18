@@ -1,4 +1,3 @@
-// hallo a.sdfj.as,dmf
 import React, { Component } from 'react'
 import './App.css'
 import 'react-chat-elements/dist/main.css';

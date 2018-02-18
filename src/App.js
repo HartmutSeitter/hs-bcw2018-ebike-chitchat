@@ -69,7 +69,16 @@ class App extends Component {
     if(responseJson.hasOwnProperty('output') 
                   && responseJson.output.hasOwnProperty('action') 
                   && responseJson.output.action.hasOwnProperty('call_discovery')) {
-      this.addMessage( { label: 'Discovery Ergebnis:', message: 'Sehr gute Frage. Das habe ich gefunden:', date: (new Date()).toLocaleTimeString()});
+
+      let display_msg = "Discovery";
+      if (responseJson.input.language_detected=='de'){
+        display_msg = "Sehr interessante Frage, Watson Discovery hat diese Info in den Dokumenten gefunden";
+      } else {
+        display_msg = "Interesting question - Watson Discovery gathered this info for you";
+      }
+
+      this.addMessage( { label: 'Discovery Ergebnis:', message: display_msg, date: (new Date()).toLocaleTimeString()});
+      console.log(">>>>>>>>>>>>>>>>>>",responseJson.input.language_detected);
       this.formatDiscovery(responseJson.output.discoveryResults);
     } else if (responseJson.hasOwnProperty('output') 
                   && responseJson.output.hasOwnProperty('action') 
@@ -95,6 +104,17 @@ class App extends Component {
       if (responseJson.output.hasOwnProperty('linktext')) {
         htmllinkText = responseJson.output.linktext.join('\n');
       }
+      let imagename = "";
+      let imagefn = "";
+      //if (responseJson.output.hasOwnProperty('textlink') && responseJson.output.textlink.hasOwnProperty('htmllink')) {
+      if (responseJson.output.hasOwnProperty('imagename')) {
+        imagename = responseJson.output.imagename.join('\n');
+      }
+      if (responseJson.output.hasOwnProperty('imagefn')) {
+        imagefn = responseJson.output.imagefn.join('\n');
+      }
+
+
         //outputMessage = outputMessage.split('<br/>').join('\n');
       //console.log("outputMessage", outputMessage);
       //console.log("translatedMessage", translatedMessage);
@@ -112,6 +132,8 @@ class App extends Component {
         hsmessage1: translatedMessage,
         hshtmllink: htmllinkMessage,
         hslinktext: htmllinkText,
+        hsimagename: imagename,
+        hsimagefn: imagefn,
         date: outputDate,
         hasTail: true
       };
@@ -146,11 +168,15 @@ class App extends Component {
   
   formatDiscovery(resultArr) {
     resultArr.map(function(result, index) {
+
+
+
+
       const formattedResult = <DiscoveryResult key={'d' + this.state.discoveryNumber + index} 
                                                         title={result.title} 
                                                         preview={result.bodySnippet} 
                                                         link={result.sourceUrl} 
-                                                        linkText={'See full manual entry'} />;
+                                                        linkText={'See full manual here / vollständiges Dokument'} />;
       this.addMessage({ message: formattedResult });
     }.bind(this));
         
@@ -196,11 +222,15 @@ class App extends Component {
       <div className='button__container'>      
         <p className='conversation__intro'>
            <img src={ require('./images/ibmcloud_icon.png') } />
-           <br/>This demo shows how the Conversation
-            service calls other Watson service 
+           <br/>This is an interactive demo BCW 2018 using different IBM Watson service
             to build advanced conversation dialogs.
-            <br/><br/>When Watson Conversations does not know how to respond, Watson Discovery will be called.<br/>
-            The calls to the Watson Services are made in Functions, IBM's serverless platform.
+            <br/><br/>
+            You can communicate with the chatbot in German and English right now. We able to extend it to other languages.
+            <br/>
+            You should know, in this demo we are using English as default language, if you enter less than 3 words.
+            <br/>(This is subject to be change, it's implmented in this way only for demo purpose).
+            <br/>Try it and enjoy the conversation 
+
         </p>
         <p className='conversation__intro_links'>
             <br/> <a href="https://console.bluemix.net/openwhisk/" target='_blank'>IBM Cloud Functions     <img src={ require('./images/functions_icon.png' )} /></a>

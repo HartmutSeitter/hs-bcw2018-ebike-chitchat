@@ -12,36 +12,54 @@
   * @return {object} the JSON of Conversation's response.
   *
   */
-const assert = require('assert');
-const watson = require('watson-developer-cloud');
-
-function main(params) {
-  return new Promise(function(resolve, reject){
-    assert(params, 'params cannot be null');
-    assert(params.username, 'params.username cannot be null');
-    assert(params.password, 'params.password cannot be null');
-    assert(params.workspace_id, 'params.workspace_id cannot be null');
-    assert(params.input, 'params.input cannot be null');
-    assert(params.context, 'params.context cannot be null');
-
-    var conversation = watson.conversation({
-      username: params.username,
-      password: params.password,
-      version: 'v1',
-      version_date: '2017-05-26'
-    });
-        
-    conversation.message({
-      workspace_id: params.workspace_id,
-      input: params.input,
-      context: params.context,
-    }, function(err, response) {
-      if (err) {
-        return reject(err);
-      }
-      return resolve(response);
-    });
-  });
-}
-
-module.exports.main = main;
+ const assert = require('assert');
+ const watson = require('watson-developer-cloud');
+ 
+ function main(params) {
+   return new Promise(function(resolve, reject){
+     assert(params, 'params cannot be null');
+     assert(params.username, 'params.username cannot be null');
+     assert(params.password, 'params.password cannot be null');
+     assert(params.workspace_id, 'params.workspace_id cannot be null');
+     assert(params.workspace_id_english, 'params.workspace_id cannot be null');
+     assert(params.workspace_id_german, 'params.workspace_id cannot be null');
+     
+     assert(params.input, 'params.input cannot be null');
+     assert(params.context, 'params.context cannot be null');
+     workspace_id = params.workspace_id_english;
+     
+ console.log(workspace_id);
+     if(params.input.hasOwnProperty('language_detected')) {
+     
+         if (params.input.language_detected == 'de') {
+             workspace_id = params.workspace_id_german;
+         }
+         if (params.input.language_detected == 'en') {
+             workspace_id = params.workspace_id_english;
+         }
+         
+     }
+ 
+ console.log(workspace_id);
+     var conversation = watson.conversation({
+       username: params.username,
+       password: params.password,
+       version: 'v1',
+       version_date: '2017-05-26'
+     });
+         
+     conversation.message({
+       workspace_id: workspace_id,
+       input: params.input,
+       context: params.context,
+     }, function(err, response) {
+       if (err) {
+         return reject(err);
+       }
+       console.log("reponse=",response);
+       return resolve(response);
+     });
+   });
+ }
+ 
+ module.exports.main = main;

@@ -29,12 +29,15 @@
       color: black;
       margin-top: 0.05rem;
       padding: 0.4rem;
+      margin-left: 1rem;
       width: fit-content; }
   .result__link_text {
-        color: blue;
+        
+        margin-left: 1rem;
         font-size: 14px;}
   .result__link_text:hover {
           color: red;
+          
           font-size: 14px;}
   .message__date {
     color: #777677;
@@ -80,3 +83,9 @@
       border-top-left-radius: 1rem; }
     .message--from-right .message__tail-foreground {
       border-top-right-radius: 1rem; }
+    
+    .message_images {
+      flex: 1;
+      width: 50%;
+      height: 50%;
+    }

@@ -1,61 +1,47 @@
 {
-  "entities": [
-    {
-      "location": [
-        0,
-        8
-      ],
-      "confidence": 1,
-      "entity": "sys-date",
-      "metadata": {
-        "calendar_type": "GREGORIAN",
-        "timezone": "GMT"
-      },
-      "value": "2018-02-11"
-    }
-  ],
+  "entities": [],
   "context": {
     "system": {
-      "branch_exited_reason": "completed",
-      "dialog_request_counter": 1,
-      "branch_exited": true,
-      "dialog_turn_counter": 1,
       "dialog_stack": [
         {
-          "dialog_node": "root"
+          "dialog_node": "node_2_1518179644466"
         }
       ],
+      "dialog_turn_counter": 1,
+      "dialog_request_counter": 1,
       "_node_output_map": {
-        "Uhrzeit": [
-          0,
+        "node_2_1518179644466": [
           0
         ]
       }
     },
     "is_non_business_question": true,
-    "topConfidence": 1,
-    "conversation_id": "d0c2e0f0-fcad-4ea6-9f67-db206e57b666",
-    "topIntent": "Uhrzeit"
+    "topConfidence": 0.32666914912707057,
+    "conversation_id": "c24883fe-8c57-4034-881c-0f9923b732b1",
+    "topIntent": "ebikeinfo"
   },
   "intents": [
     {
-      "intent": "Uhrzeit",
-      "confidence": 1
+      "intent": "ebikeinfo",
+      "confidence": 0.32666914912707057
     }
   ],
   "output": {
+    "log_messages": [],
+    "answer_id": [],
     "text": [
-      "Es ist 14:02 Uhr."
+      "Du solltest wissen, dass das Herzstück des ebikes die \"Drive Unit\" ist. Von Bosch gibt es derzeit vier verschiedene \"Drive Units\" - Active Line, Active Line Plus, Performance Line und Performance Line CX.  Welche \"Drive Unit\" darf ich dir genauer vorstellen?"
     ],
     "nodes_visited": [
       "node_1_1500369585323",
       "Intents",
-      "Uhrzeit"
+      "node_2_1518179644466"
     ],
-    "answer_id": [],
-    "log_messages": []
+    "action": {
+      "call_translate": ""
+    }
   },
   "input": {
-    "text": "wie spät ist es"
+    "text": "ich brauche infos zu ebikes"
   }
 }

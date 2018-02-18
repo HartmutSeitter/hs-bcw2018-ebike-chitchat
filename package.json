@@ -4,11 +4,14 @@
   "private": true,
   "dependencies": {
     "axios": "^0.17.1",
+    "peer": "^0.2.8",
     "react": "^16.2.0",
     "react-chat-elements": "^0.8.1",
     "react-dom": "^16.2.0",
+    "react-native": "^0.53.0",
+    "react-native-htmlview": "^0.12.1",
     "react-scripts": "1.1.0",
-    "watson-react-components": "*"
+    "watson-react-components": "^0.6.16"
   },
   "scripts": {
     "start": "react-scripts start",

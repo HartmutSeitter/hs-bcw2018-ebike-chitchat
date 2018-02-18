@@ -1,8 +1,8 @@
-.result {
+.dis_result {
   background-color: #f2f2f2;
   padding: 1rem;
-  width: 100%;
-  border: 10px solid #562f72; }
+  width: 85%;
+  border: 1px solid #562f72; }
   .result__title {
     color: #562f72;
     font-weight: bold; }
@@ -14,4 +14,5 @@
 
 .result + .result {
   margin-top: 0rem;
+  margin-bottom: 1rem;
   border-top: none; }
