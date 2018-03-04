@@ -17,9 +17,6 @@ function main(params) {
     console.log("getLocation called hartnmut");
     
     if(params.entities.length>0) {
-
-    
-
       if(params.output.hasOwnProperty('action') && 
          params.output.action.hasOwnProperty('call_weather') &&
          params.entities[0].hasOwnProperty('value') && 
@@ -80,8 +77,7 @@ function main(params) {
               var geoLocation = [];
               geoLocation[0] = {
                   "longtitue": longitudes,
-                  "latitute" : latitudes,
-                  "city": params.entities[0].value
+                  "latitute" : latitudes
               }
               params.output.geoLocation = geoLocation;
               let returnJson = params;

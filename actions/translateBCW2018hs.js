@@ -17,6 +17,23 @@ function main(params) {
 
     var from = params.translateFrom || 'de';
     var to = params.translateTo || 'en';
+    
+      if(params.input.hasOwnProperty('language_detected')) {
+      
+        if (params.input.language_detected == 'de') {
+                 from = 'de'
+                 to = 'en'
+        }
+        if (params.input.language_detected == 'en') {
+                from = 'en'
+                to = 'fr'
+        }
+          
+    }
+    
+    
+    
+    
     var translateParam = params.translateParam || 'payload';
     var translateParamIn = params.translateParam || 'payload';
       //var translateParam.payload = params.output.text;
@@ -27,7 +44,7 @@ function main(params) {
     input[translateParam] = params[translateParam];
     console.log("input[translateParam]",input[translateParam]);
     console.log("params[translateParam]",params[translateParam]);
-    
+    let save_input_text = params.output.text;
     input[translateParam] = params.output.text;
     console.log("input[translateParam]",input[translateParam]);
     
@@ -40,6 +57,7 @@ function main(params) {
         var texts = getTextsToTranslate(input);
         
         var promise = new Promise(function(resolve, reject) {
+            let xx = texts;
             doTranslateTexts(texts, from, to, params.username, params.password, url, function (error, translatedTexts) {
 
                 if (error) {
@@ -50,6 +68,12 @@ function main(params) {
                     
                     
                     let returnJson = params;
+                    console.log("save_input_text",save_input_text);
+                    console.log("input[translateParam]",input[translateParam]);
+                    delete returnJson.url;
+                    delete returnJson.password;
+                    delete returnJson.username;
+                    returnJson.output.text = xx;
                     returnJson.output.translated=output;
                     resolve(returnJson);
                 }
@@ -58,6 +82,10 @@ function main(params) {
 
         return promise;
     }
+    delete params.url;
+    delete params.password;
+    delete params.username;
+  
     return params;
 }
 

@@ -26,6 +26,9 @@ function Conversation(props) {
     }
   }
   
+  
+
+
   return(
     <div className="conversation">
       <div className="conversation__messages">

@@ -16,17 +16,34 @@ var request = require('request');
  * @return The hourly forecast for the lat/long.
  */
 function main(params) {
-    console.log('input params:', params);
+    //console.log('input params:', params);
     var username = params.username;
     var password = params.password;
-    var lat = params.latitude || '0';
-    var lon = params.longitude ||  '0';
-    var language = params.language || 'de-DE';
+    var lat = params.latitude || '52.50190';
+    var lon = params.longitude ||  '13.40868'; 
+    var city = "Berlin";
+    var language = params.language || 'en-US';
     var units = params.units || 'm';
     var timePeriod = params.timePeriod || '7day';
     var host = params.host || 'twcservice.mybluemix.net';
     var url = 'https://' + host + '/api/weather/v1/geocode/' + lat + '/' + lon;
+    
+    if(params.input.hasOwnProperty('language_detected')) {
+      
+        if (params.input.language_detected == 'de') {
+                 language = 'de-DE';
+        }
+        if (params.input.language_detected == 'en') {
+             language = 'en-US';
+        }
+          
+    }
     var qs = {language: language, units: units};
+
+
+
+
+
 
     switch(timePeriod) {
         case '48hour':
@@ -41,13 +58,22 @@ function main(params) {
             break;
         default:
             url += '/forecast/daily/7day.json';
+      
             break;
     }
 
     console.log('url:', url);
     
     if(params.output.hasOwnProperty('action') && params.output.action.hasOwnProperty('call_weather')) {
-
+        if(params.output.hasOwnProperty('geoLocation')) {
+            lat = params.output.geoLocation[0].latitute;
+            lon =  params.output.geoLocation[0].longtitue;
+            city = params.output.geoLocation[0].city;
+            console.log("geoLocation",lat,lon);
+        }
+        
+        
+        
         var promise = new Promise(function(resolve, reject) {
             request({
                 url: url,
@@ -101,54 +127,77 @@ function main(params) {
                     }
                         
                     var weatherResults = [];
-                    weatherResults[0] = {
-                        day: "Montag",
-                        weather: weather_conditions.Montag.day.narrative
-                    };
-                    weatherResults[1] = {
-                        day: "Dienstag",
-                        weather: weather_conditions.Dienstag.day.narrative
-                    };
-                    weatherResults[2] = {
-                        day: "Mittwoch",
-                        weather: weather_conditions.Mittwoch.day.narrative
-                    };
-                    weatherResults[3] = {
-                        day: "Donnerstag",
-                        weather: weather_conditions.Donnerstag.day.narrative
-                    };
-                    weatherResults[4] = {
-                        day: "Freitag",
-                        weather: weather_conditions.Freitag.day.narrative
-                    };
-                    weatherResults[5] = {
-                        day: "Samstag",
-                        weather: weather_conditions.Samstag.day.narrative
-                    };
-                    weatherResults[6] = {
-                        day: "Sonntag",
-                        weather: weather_conditions.Sonntag.day.narrative
-                    };
+                    if (language == 'de-DE') {
             
+                            weatherResults[0] = {
+                            day: "Montag in " + city + '  lat= ' + lat + '  lon' + lon,
+                            weather: weather_conditions.Montag.day.narrative
+                        };
+                        weatherResults[1] = {
+                            day: "Dienstag in " + city,
+                            weather: weather_conditions.Dienstag.day.narrative
+                        };
+                        weatherResults[2] = {
+                            day: "Mittwoch in " + city,
+                            weather: weather_conditions.Mittwoch.day.narrative
+                        };
+                        weatherResults[3] = {
+                            day: "Donnerstag in " + city,
+                            weather: weather_conditions.Donnerstag.day.narrative
+                        };
+                        weatherResults[4] = {
+                            day: "Freitag in " + city,
+                            weather: weather_conditions.Freitag.day.narrative
+                        };
+                        weatherResults[5] = {
+                            day: "Samstag in " + city,
+                            weather: weather_conditions.Samstag.day.narrative
+                        };
+                        weatherResults[6] = {
+                            day: "Sonntag in " + city,
+                            weather: weather_conditions.Sonntag.day.narrative
+                        };
+                    }
+                    if (language == 'en-US') {
+                      
+                            weatherResults[0] = {
+                            day: "Monday in " + city,
+                            weather: weather_conditions.Monday.day.narrative
+                        };
+                        weatherResults[1] = {
+                            day: "Tuesday in " + city,
+                            weather: weather_conditions.Tuesday.day.narrative
+                        };
+                        weatherResults[2] = {
+                            day: "Wednesday in " + city,
+                            weather: weather_conditions.Wednesday.day.narrative
+                        };
+                        weatherResults[3] = {
+                            day: "Thursday in " + city,
+                            weather: weather_conditions.Thursday.day.narrative
+                        };
+                        weatherResults[4] = {
+                            day: "Friday in " + city,
+                            weather: weather_conditions.Friday.day.narrative
+                        };
+                        weatherResults[5] = {
+                            day: "Saturday in " + city,
+                            weather: weather_conditions.Saturday.day.narrative
+                        };
+                        weatherResults[6] = {
+                            day: "Sunday in " + city,
+                            weather: weather_conditions.Sunday.day.narrative
+                        };
+                    }
+                
                     params.output.WeatherResults = weatherResults;
                     params.output.WeatherConditions = weather_conditions;
                     let returnJson = params;
-                    delete returnJson.WEATHER_PASSWORD;
-                    delete returnJson.WEATHER_URL;
-                    delete returnJson.WEATHER_USERNAME;
-                  
-                        
-                    
-                            
-                        
-                    
-                    
+                    delete returnJson.username;
+                    delete returnJson.url;
+                    delete returnJson.password;
+                    delete returnJson.port;
                     resolve(returnJson);
-                    
-                    
-                    
-                    
-                    
                     
                 } else {
                     console.log('error getting forecast');
@@ -163,9 +212,13 @@ function main(params) {
                 }
             });
         });
-
+        
         return promise;
     } else {
+        delete params.username
+        delete params.password;
+        delete params.url;
+        delete params.port;
         return params;
     }
 }

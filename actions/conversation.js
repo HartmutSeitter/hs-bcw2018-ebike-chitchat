@@ -38,6 +38,8 @@
              workspace_id = params.workspace_id_english;
          }
          
+     } else {
+         workspace_id = params.workspace_id_english;
      }
  
  console.log(workspace_id);

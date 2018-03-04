@@ -43,6 +43,8 @@
                  collection_id = params.collection_id_english;
              }
           
+         } else {
+             collection_id = params.collection_id_english;
          }
          
        var discovery = new DiscoveryV1({

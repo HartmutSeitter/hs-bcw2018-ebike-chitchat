@@ -28,7 +28,10 @@ class App extends Component {
 
   callWatson(message) {
     //const watsonApiUrl = process.env.REACT_APP_API_URL;
-    const watsonApiUrl = "https://openwhisk.ng.bluemix.net/api/v1/web/seitter_org_dev/conversation-with-discovery-openwhisk/conversation-with-discovery-sequence.json"
+    //const watsonApiUrl = "https://openwhisk.ng.bluemix.net/api/v1/web/seitter_org_dev/conversation-with-discovery-openwhisk/conversation-with-discovery-sequence.json"
+    const watsonApiUrl = "https://openwhisk.eu-de.bluemix.net/api/v1/web/seitter%40de.ibm.com_dev/hs-bcw2018/bcw2018-sequence.json"
+    
+    
     const requestJson = JSON.stringify({
       input: {
         text: message

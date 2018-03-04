@@ -6,14 +6,14 @@
   .message--from-right {
     text-align: right; }
   .message__content {
-    background-color: #af6ee8;
+    background-color: blue;
     border-radius: 1rem 1rem 1rem 0;
     color: #fff;
     margin-top: 0.1rem;
     padding: 0.6rem;
     width: fit-content; }
     .message--from-left .message__content {
-      background-color: #af6ee8;
+      background-color: blue;
       color: #fff;
       border-radius: 1rem 1rem 1rem 0; }
     .message--from-right .message__content {
@@ -49,7 +49,7 @@
     .message--from-right .message__date {
       margin-right: 1rem; }
   .message__label {
-    color: #00b4a0; }
+    color: darkgray; }
   .message__tail {
     margin: 0;
     height: 1rem;
@@ -68,7 +68,7 @@
     top: 0;
     left: 0; }
     .message--from-left .message__tail-background {
-      background-color: #af6ee8; }
+      background-color: blue; }
     .message--from-right .message__tail-background {
       background-color: #e0e0e0; }
   .message__tail-foreground {
