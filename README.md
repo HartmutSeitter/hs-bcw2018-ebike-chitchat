@@ -6,6 +6,9 @@ In the hs-bcw2018-ebike-chitchat a chitchat conversation bot is implemented and 
 
 The hs-bcw2018 chitchat is based on the React App and for more info see[Create React App](https://github.com/facebookincubator/create-react-app).
 
+[![Deploy to Bluemix](https://bluemix.net/deploy/button.png)](https://bluemix.net/deploy?repository=https://git.ng.bluemix.net/idsorg/sample-java-cloudant)
+
+
 ## Dependencies 
 This application uses:
 1. IBM Cloud Functions (openwhisk) to invoke the Watson Services
